@@ -1,240 +1,240 @@
 # docker-secure-registry
 
 
-    \newline
+&nbsp;
 Docker Secure Private Registry Using openssl
 
 
-    \newline
+&nbsp;
 ##########STEP 1##########
 
 
-    \newline
+&nbsp;
 Clone this repo
 
 
 
-    \newline
+&nbsp;
 
 ##########STEP 2##########
 
 
-    \newline
+&nbsp;
 edit docker-compose.yaml
 
 
-    \newline
+&nbsp;
   change your-web.com to any name you want
 
 
-    \newline
+&nbsp;
 edit nginx/registry.conf
 
 
-    \newline
+&nbsp;
   change your-web.com to any name you want
 
 
-    \newline
+&nbsp;
 
 ##########STEP 3##########
 
 
-    \newline
+&nbsp;
 Create Authentication
 
 
-    \newline
+&nbsp;
   cd docker-registry/nginx
 
 
-    \newline
+&nbsp;
   htpasswd -c registry.password <username>
 
 
-    \newline
+&nbsp;
 Enter password you like.
 
 
-    \newline
+&nbsp;
 
 ##########STEP 4##########
 
 
-    \newline
+&nbsp;
 edit /etc/hosts
 
 
-    \newline
+&nbsp;
   In last of file add this line
 
 
-    \newline
+&nbsp;
   <your-server-ip> <your-web.com>
 
 
-    \newline
+&nbsp;
 
 ##########STEP 5##########
 
 
-    \newline
+&nbsp;
 edit /etc/ssl/openssl.conf and add following lines
 
 
-    \newline
+&nbsp;
   subjectAltName= @alt_names
 
 
-    \newline
+&nbsp;
   
   [ alt_names ]
 
 
-    \newline
+&nbsp;
   IP.1 = Your-server-ip
 
 
-    \newline
+&nbsp;
   DNS.1 = your-web.com
 
 
-    \newline
+&nbsp;
 
 ##########STEP 6##########
 
 
-    \newline
+&nbsp;
 Generating SSL Certificate
 
 
-    \newline
+&nbsp;
   cd docker-secure-registry
 
 
-    \newline
+&nbsp;
   cd nginx
 
 
-    \newline
+&nbsp;
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout myregistry.key -out myregistry.cert
 
 
-    \newline
+&nbsp;
  You'll be prompted some parameters. Just Press Enter for all except "Common Name (e.g. server FQDN or YOUR name) []:"
  Type <your-server-ip> in it and press enter.
 
 
-    \newline
+&nbsp;
  
 ##########STEP 7##########
 
 
-    \newline
+&nbsp;
 Generating CA Certificate. Goto nginx folder in repo and type following command
 
 
-    \newline
+&nbsp;
   openssl req -new -key myregistry.key -out myregistry.csr
 
 
-    \newline
+&nbsp;
   openssl genrsa -out ca.key 2048
 
 
-    \newline
+&nbsp;
   openssl req -new -x509 -key ca.key -out ca.crt
 
 
-    \newline
+&nbsp;
   openssl x509 -req -in myregistry.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out myregistry.crt
 
 
-    \newline
+&nbsp;
   
 You'll be prompted some parameters. Just Press Enter for all except "Common Name (e.g. server FQDN or YOUR name) []:"
 Type <your-server-ip> in it and press enter.
    
 
-    \newline
+&nbsp;
 
 The generated ca.crt file is the CA certificate and will be used by clients and this server too.
 
 
-    \newline
+&nbsp;
 
 ##########STEP 8##########
 
 
-    \newline
+&nbsp;
 Copy myregistry.crt file from nginx folder to /etc/ssl/certs/ and type following commands
 
 
-    \newline
+&nbsp;
   update-ca-certificates
 
 
-    \newline
+&nbsp;
   systemctl daemon-reload
 
 
-    \newline
+&nbsp;
   systemctl restart docker
 
 
-    \newline
+&nbsp;
 
 ##########STEP 9##########
 
 
-    \newline
+&nbsp;
 Creating Docker Registry
 
 
-    \newline
+&nbsp;
   goto docker-secure-registry folder and type following command
 
 
-    \newline
+&nbsp;
   docker-compose -f docker-compose.yaml up -d
 
 
-    \newline
+&nbsp;
   
 ##########STEP 10##########
 
 
-    \newline
+&nbsp;
 Verify if it works, type following commands
 
 
-    \newline
+&nbsp;
   docker login <your-web.com>
 
 
-    \newline
+&nbsp;
     
    Enter your username and password you set before.It should be succeeded
   
 
-    \newline
+&nbsp;
 
   docker pull hello-world
 
 
-    \newline
+&nbsp;
   docker tag hello-world <your-web.com>/hello-world
 
 
-    \newline
+&nbsp;
   docker push <your-web.com>/hello-world
 
 
-    \newline
+&nbsp;
   docker pull <your-web.com>/hello-world
 
 
-    \newline
+&nbsp;
 
 For client side give myregistry.crt file to client and ask them to do step 8
   
