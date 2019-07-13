@@ -67,7 +67,7 @@ Verify if it works, type following commands
   docker push <your-web.com>/hello-world
   docker pull <your-web.com>/hello-world
 
-For client side give myregistry.crt file to client and ask them to do step 8.
+For client side give myregistry.crt file to client and ask them to do step 8
   
 
 
