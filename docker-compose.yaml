@@ -1,0 +1,27 @@
+nginx:
+  image: "nginx:1.9"
+  container_name: nginx
+  ports:
+    - 443:443
+    - 80:80
+  links:
+    - registry:registry
+  extra_hosts:
+    - "sahabareg.com:<YOUR SERVER IP>"
+  volumes:
+    - ./nginx/:/etc/nginx/conf.d/
+
+registry:
+  image: registry:2
+  container_name: registry
+  ports:
+    - 5001:5000
+  environment:
+    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
+    - REGISTRY_STORAGE_DELETE_ENABLED=true
+  extra_hosts:
+    - "sahabareg.com:<YOUR SERVER IP>"
+
+ 
+  volumes:
+    - ./data:/data
