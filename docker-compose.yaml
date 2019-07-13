@@ -7,7 +7,7 @@ nginx:
   links:
     - registry:registry
   extra_hosts:
-    - "sahabareg.com:<YOUR SERVER IP>"
+    - "your-web.com:<YOUR SERVER IP>"
   volumes:
     - ./nginx/:/etc/nginx/conf.d/
 
@@ -20,7 +20,7 @@ registry:
     - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
     - REGISTRY_STORAGE_DELETE_ENABLED=true
   extra_hosts:
-    - "sahabareg.com:<YOUR SERVER IP>"
+    - "your-web.com.com:<YOUR SERVER IP>"
 
  
   volumes:
