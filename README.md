@@ -68,7 +68,7 @@ You'll be prompted some parameters. Just Press Enter for all except "Common Name
 
 Type "your-server-ip" in it and press enter.
 
-The generated ca.crt file is the CA certificate and will be used by clients and this server too.
+The generated myregistry.crt file is the CA certificate and will be used by clients and this server too.
 
 ##########STEP 8##########
 
