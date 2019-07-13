@@ -99,6 +99,6 @@ Enter your username and password you set before.It should be succeeded
 
 For client side give myregistry.crt file to client and ask them to do step 8
 
-To read about SSL certificates read:
+To read about SSL certificates visit:
 
 https://gist.github.com/soarez/9688998
