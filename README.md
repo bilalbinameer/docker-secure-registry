@@ -237,6 +237,9 @@ Verify if it works, type following commands
 &nbsp;
 
 For client side give myregistry.crt file to client and ask them to do step 8
-  
+&nbsp;
 
+To read about SSL certificates read:
+&nbsp;
 
+https://gist.github.com/soarez/9688998
